@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	    <title>Strangers</title>
+	    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	    <link href="/webjars/font-awesome/5.10.1/css/all.min.css" rel="stylesheet">
+	    <link href="/main.css" rel="stylesheet">
+	    <script src="/webjars/jquery/jquery.min.js"></script>
+	    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+	    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+	    <script src="/app.js"></script>
+	</head>
+	
+	<body>
+		<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+		    enabled. Please enable
+		    Javascript and reload this page!</h2></noscript>
+		    
+		<div id="main-content" class="container">
+		    <div class="row">
+		        <div class="col-12">
+		            <table id="conversation" class="table table-striped">
+		                <thead>
+		                <tr>
+		                    <th>Strangers Room</th>
+		                </tr>
+		                </thead>
+		                <tbody id="greetings">
+		                </tbody>
+		            </table>
+		        </div>
+		    </div>
+		</div>
+
+		<nav class="navbar fixed-bottom navbar-dark bg-dark">
+			<div class="container">
+				<form id="message-form" class="col-12">
+					<div class="row">
+						<textarea id="name" class="form-control col-10" placeholder="Say Somthing!"></textarea>
+						<button id="send" class="btn btn-info col-2" type="submit" disabled><i class="far fa-paper-plane"></i></button>
+					</div>
+				</form>
+			</div>
+		</nav>
+	        
+	</body>
+</html>
