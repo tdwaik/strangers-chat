@@ -1,10 +1,13 @@
 var stompClient = null;
 
+var address = null;
+
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
     if (connected) {
         $("#conversation").show();
+        $("#connect-loading").hide();
     }
     else {
         $("#conversation").hide();
@@ -13,12 +16,14 @@ function setConnected(connected) {
 }
 
 function connect() {
+	$("#connect-loading").show();
+	
     var socket = new SockJS('/gs-guide-websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/greetings', function (greeting) {
+        stompClient.subscribe('/topic/greetings/' + address, function (greeting) {
             showGreeting(JSON.parse(greeting.body).content);
         });
     });
@@ -35,9 +40,9 @@ function disconnect() {
 function sendName() {
 	var msg = getMsg();
 	if(msg.length > 0) {
-    	stompClient.send("/app/hello", {}, JSON.stringify({'name': msg}));
+    	stompClient.send("/app/chat/" + address, {}, JSON.stringify({'content': msg, 'address': address}));
     	$("#message-form").trigger("reset");
-    	$("#name").select();
+    	$("#message-content").select();
 	}
 }
 
@@ -50,24 +55,50 @@ function showGreeting(message) {
 
 function init() {
 	
+	setAddress();
+	
 	connect();
 	
-	$("#name").keyup(function() {
-    	var msg = getMsg();
+	$("#message-content").keyup(function() {
+    	var msg = $("#message-content").val();
     	$("#send").prop('disabled', msg.length === 0);
     });
 	
-	$("#name").change(function() {
-    	var msg = $("#name").val();
+	$("#message-content").change(function() {
+    	var msg = $("#message-content").val();
     	$("#send").prop('disabled', msg.length === 0);
     });
 	
-	$("#name").select();
+	$("#message-content").select();
 	
 }
 
 function getMsg() {
-	return $("#name").val();
+	return $("#message-content").val();
+}
+
+function setAddress() {
+	var url = new URL(location.href);
+	address = url.searchParams.get("address");
+	
+	var g = url.searchParams.get("g");
+	
+	if(address === undefined || address === null) {
+		// TODO validate address and alarm if wrong!
+		generateAdreess();
+	}
+	
+	console.log("address: " + address);
+}
+
+function generateAdreess() {
+	address = "ra"
+		+ Math.floor((Math.random() * 9999999999) + 1000000000).toString(36)
+		+ Math.floor((Math.random() * 9999999999) + 1000000000).toString()
+		+ Math.floor((Math.random() * 9999999999) + 1000000000).toString(36)
+		+ Math.floor((Math.random() * 9999999999) + 1000000000).toString();
+
+	location.replace(window.location.protocol + "//" + location.host + "?address=" + address);
 }
 
 $(function () {

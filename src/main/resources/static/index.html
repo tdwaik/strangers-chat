@@ -9,6 +9,7 @@
 	    <link href="/webjars/font-awesome/5.10.1/css/all.min.css" rel="stylesheet">
 	    <link href="/main.css" rel="stylesheet">
 	    <script src="/webjars/jquery/jquery.min.js"></script>
+	    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 	    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 	    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
 	    <script src="/app.js"></script>
@@ -19,6 +20,12 @@
 		    enabled. Please enable
 		    Javascript and reload this page!</h2></noscript>
 		    
+		<div id="connect-loading" class="container text-center loading">
+			<div class="spinner-border text-info m-5" role="status">
+				<span class="sr-only">Loading...</span>
+			</div>
+		</div>
+		
 		<div id="main-content" class="container">
 		    <div class="row">
 		        <div class="col-12">
@@ -39,7 +46,7 @@
 			<div class="container">
 				<form id="message-form" class="col-12">
 					<div class="row">
-						<textarea id="name" class="form-control col-10" placeholder="Say Somthing!"></textarea>
+						<textarea id="message-content" class="form-control col-10" placeholder="Say Somthing!"></textarea>
 						<button id="send" class="btn btn-info col-2" type="submit" disabled><i class="far fa-paper-plane"></i></button>
 					</div>
 				</form>

@@ -6,3 +6,15 @@ body {
 	position: absolute;
     margin-bottom: 80px;
 }
+
+.loading {
+	display: none;
+}
+
+#connect-loading {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top: 40%;
+	right: 0;
+}
