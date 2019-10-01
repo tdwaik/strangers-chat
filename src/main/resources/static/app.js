@@ -1,6 +1,10 @@
-var stompClient = null;
-
-var address = null;
+var stompClient = address = null;
+var isMobile = true;
+var messageForm = {
+		id: "#message-form",
+		content: "#message-content"
+		};
+var env = "prod";
 
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
@@ -41,8 +45,8 @@ function sendName() {
 	var msg = getMsg();
 	if(msg.length > 0) {
     	stompClient.send("/app/chat/" + address, {}, JSON.stringify({'content': msg, 'address': address}));
-    	$("#message-form").trigger("reset");
-    	$("#message-content").select();
+    	$(messageForm.id).trigger("reset");
+    	$(messageForm.content).select();
 	}
 }
 
@@ -50,18 +54,35 @@ function showGreeting(message) {
     $("#greetings").append("<tr><td>" + message + "</td></tr>");
     $("#send").prop('disabled', true);
     console.log($("#conversation")[0].scrollHeight);
-    $("html, body").animate({ scrollTop: $(document).height() }, 250);
+    $("#conversation").animate({ scrollTop: $("#conversation")[0].scrollHeight }, 150);
 }
 
 function init() {
+	
+	isMobile = ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) );
+	
+	env = window.location.hostname == "localhost" ? "dev" : "prod";
+	
+	if(env == "prod") {
+		console.log = function(s) {
+			return;
+		}
+	}
 	
 	setAddress();
 	
 	connect();
 	
-	$("#message-content").keyup(function() {
-    	var msg = $("#message-content").val();
-    	$("#send").prop('disabled', msg.length === 0);
+	$("#message-content").keypress(function(e) {
+		if(!isMobile && !e.shiftKey && e.which === 13) {
+			e.preventDefault();
+			sendName();
+		}
+	});
+	
+	$("#message-content").keyup(function(e) {
+		var msg = $("#message-content").val();
+		$("#send").prop('disabled', msg.length === 0);
     });
 	
 	$("#message-content").change(function() {
@@ -104,7 +125,7 @@ function generateAdreess() {
 $(function () {
 	init();
 	
-    $("form").on('submit', function (e) {
+    $(messageForm.id).on('submit', function (e) {
         e.preventDefault();
     });
     $( "#send" ).click(function() { sendName(); });

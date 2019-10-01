@@ -20,21 +20,22 @@
 		    enabled. Please enable
 		    Javascript and reload this page!</h2></noscript>
 		    
+	    <nav id="top-nav" class="navbar fixed-top navbar-light bg-light">
+			<div class="container">
+				<b class="navbar-brand">Strangers Room</b>
+			</div>
+		</nav>
+		    
 		<div id="connect-loading" class="container text-center loading">
 			<div class="spinner-border text-info m-5" role="status">
 				<span class="sr-only">Loading...</span>
 			</div>
 		</div>
 		
-		<div id="main-content" class="container">
+		<div id="conversation" class="container overflow-auto">
 		    <div class="row">
 		        <div class="col-12">
-		            <table id="conversation" class="table table-striped">
-		                <thead>
-		                <tr>
-		                    <th>Strangers Room</th>
-		                </tr>
-		                </thead>
+		            <table class="table table-striped">
 		                <tbody id="greetings">
 		                </tbody>
 		            </table>

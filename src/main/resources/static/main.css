@@ -2,9 +2,22 @@ body {
 	background-color: #f8f9fa;
 }
 
+#top-nav {
+	box-shadow: 0 4px 12px 0 rgba(0,0,0,.05);
+}
+#top-nav .navbar-brand {
+	padding: 0;
+}
+
 #conversation{
-	position: absolute;
-    margin-bottom: 80px;
+	position: fixed;
+	top:50px;
+	bottom: 80px;
+	right: 0;
+	left: 0;
+    /*margin: 50px 0 80px 0;*/
+    overflow: auto;
+    z-index: 1;
 }
 
 .loading {
